@@ -5,7 +5,7 @@ import { Header } from './components/header/Header'
 import { Players } from './components/players/Players'
 
 function App() {
-  const [game, setGame] = useState<string[]>(['', '', '', '', '', '', '', '', ''])
+  const [game, setGame] = useState(Array(9).fill(null))
   return (
     <div className='container'>
       <Header />
