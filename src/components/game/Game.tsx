@@ -1,14 +1,11 @@
-import { useState, MouseEvent } from 'react'
+import { useState, useContext, MouseEvent } from 'react'
+import { GlobalContext } from '../app/App'
 import './Game.css'
 
-interface props {
-  game: string[],
-  setGame: (game: string[]) => void
-}
-
-export const Game = ({ game, setGame }: props) => {
-  const [isPlaying, setIsPlaying] = useState<string>('X')
+export const Game = () => {
+  const [game, setGame] = useState(Array(9).fill(null))
   const [gameFinished, setGameFinished] = useState<boolean>(false)
+  const { isPlaying, setIsPlaying } = useContext(GlobalContext)
 
   const checkIfISTheWinner = (gameStatus: string[]) => {
     const possibleWinnerLines: number[][] = [
@@ -52,24 +49,35 @@ export const Game = ({ game, setGame }: props) => {
     }
   }
 
+  const resetGame = () => {
+    Array.from(document.getElementsByClassName('item')).forEach(item => item.classList.remove('item-winner'))
+    setGame(Array(9).fill(null))
+    setIsPlaying('X')
+    setGameFinished(false)
+
+  }
+
   return (
     <>
-      <div className="line">
-        <div className="item" id="0" onClick={setValueItem}><span id="item-0">{game[0]}</span></div>
-        <div className="item" id="1" onClick={setValueItem}><span id="item-1">{game[1]}</span></div>
-        <div className="item" id="2" onClick={setValueItem}><span id="item-2">{game[2]}</span></div>
-      </div>
+      <button onClick={resetGame}>RESTART GAME</button>
+      <div id="board">
+        <div className="line">
+          <div id="0" data-testid="test-item-0" onClick={setValueItem}><span className="item" id="item-0">{game[0] || ''}</span></div>
+          <div id="1" data-testid="test-item-1" onClick={setValueItem}><span className="item" id="item-1">{game[1] || ''}</span></div>
+          <div id="2" data-testid="test-item-2" onClick={setValueItem}><span className="item" id="item-2">{game[2] || ''}</span></div>
+        </div>
 
-      <div className="line line-middle">
-        <div className="item" id="3" onClick={setValueItem}><span id="item-3">{game[3]}</span></div>
-        <div className="item" id="4" onClick={setValueItem}><span id="item-4">{game[4]}</span></div>
-        <div className="item" id="5" onClick={setValueItem}><span id="item-5">{game[5]}</span></div>
-      </div>
+        <div className="line line-middle">
+          <div id="3" data-testid="test-item-3" onClick={setValueItem}><span className="item" id="item-3">{game[3] || ''}</span></div>
+          <div id="4" data-testid="test-item-4" onClick={setValueItem}><span className="item" id="item-4">{game[4] || ''}</span></div>
+          <div id="5" data-testid="test-item-5" onClick={setValueItem}><span className="item" id="item-5">{game[5] || ''}</span></div>
+        </div>
 
-      <div className="line">
-        <div className="item" id="6" onClick={setValueItem}><span id="item-6">{game[6]}</span></div>
-        <div className="item" id="7" onClick={setValueItem}><span id="item-7">{game[7]}</span></div>
-        <div className="item" id="8" onClick={setValueItem}><span id="item-8">{game[8]}</span></div>
+        <div className="line">
+          <div id="6" data-testid="test-item-6" onClick={setValueItem}><span className="item" id="item-6">{game[6] || ''}</span></div>
+          <div id="7" data-testid="test-item-7" onClick={setValueItem}><span className="item" id="item-7">{game[7] || ''}</span></div>
+          <div id="8" data-testid="test-item-8" onClick={setValueItem}><span className="item" id="item-8">{game[8] || ''}</span></div>
+        </div>
       </div>
     </>
   )

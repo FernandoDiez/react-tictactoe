@@ -1,3 +1,7 @@
+#board {
+  padding: 10px;
+}
+
 .line {
   display: flex;
   flex-direction: row;
@@ -7,12 +11,12 @@
 .line-middle {
   border-width: 1px 0 1px 0;
   border-style: solid;
-  border-color: black;
+  border-color: var(--color-lines);
 }
 
-.line .item:first-child,
-.line .item:nth-child(2) {
-  border-right: 1px solid black;
+.line div:first-child,
+.line div:nth-child(2) {
+  border-right: 1px solid var(--color-lines);
 }
 
 .item {
